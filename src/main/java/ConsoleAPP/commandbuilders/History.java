@@ -1,27 +1,24 @@
-package ConsoleAPP.commands;
+package ConsoleAPP.commandbuilders;
 
 import java.util.LinkedList;
 
-public class History implements Command {
+public class History implements CommandBuilder {
     private final LinkedList<String> commandHistory = new LinkedList<>();
 
-    public void addLine(String[] tokens) {
+    public void addHistoryLine(String[] tokens) {
         commandHistory.add(tokens[0]);
         if (commandHistory.size() > 9)
             commandHistory.remove();
     }
 
     @Override
-    public void prepareForExecution(String[] tokens) {
-
-    }
-
-    @Override
-    public void execute() {
-        for (String commandName : commandHistory) {
-            System.out.println(commandName);
-        }
-        System.out.println();
+    public Command build(String[] tokens) {
+        return () -> {
+            for (String commandName : commandHistory) {
+                System.out.println(commandName);
+            }
+            System.out.println();
+        };
     }
 
     @Override

@@ -1,14 +1,17 @@
-package ConsoleAPP.commands;
+package ConsoleAPP.commandbuilders;
 
-public class AddIfMin implements Command {
-    @Override
-    public void prepareForExecution(String[] tokens) {
+import ConsoleAPP.CollectionManager;
 
+public class AddIfMin implements CommandBuilder {
+    private final CollectionManager manager;
+
+    public AddIfMin(CollectionManager manager) {
+        this.manager = manager;
     }
 
     @Override
-    public void execute() {
-
+    public Command build(String[] tokens) {
+        return null;
     }
 
     @Override

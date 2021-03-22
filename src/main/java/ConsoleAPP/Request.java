@@ -2,6 +2,6 @@ package ConsoleAPP;
 
 import ConsoleAPP.exceptions.ExitException;
 
-public interface RequestExecutor {
+public interface Request {
     void execute() throws ExitException;
 }

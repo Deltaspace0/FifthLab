@@ -1,14 +1,17 @@
-package ConsoleAPP.commands;
+package ConsoleAPP.commandbuilders;
 
-public class Info implements Command {
-    @Override
-    public void prepareForExecution(String[] tokens) {
+import ConsoleAPP.CollectionManager;
 
+public class Info implements CommandBuilder {
+    private final CollectionManager manager;
+
+    public Info(CollectionManager manager) {
+        this.manager = manager;
     }
 
     @Override
-    public void execute() {
-
+    public Command build(String[] tokens) {
+        return null;
     }
 
     @Override

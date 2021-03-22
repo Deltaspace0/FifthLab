@@ -8,11 +8,11 @@ public class CollectionManager {
     private final LinkedHashSet<Worker> elements = new LinkedHashSet<>();
 
     public String getInfo() {
-        return "себя";
+        return null;
     }
 
     public String getElements() {
-        return "их";
+        return null;
     }
 
     public void removeByID(String ID) {
@@ -24,18 +24,18 @@ public class CollectionManager {
     }
 
     public String getCSV() {
-        return "csv";
+        return null;
     }
 
     public String getMaxByStatus() {
-        return "max";
+        return null;
     }
 
     public String getElementsAscending() {
-        return "asc";
+        return null;
     }
 
     public String getPositionsDescending() {
-        return "des";
+        return null;
     }
 }

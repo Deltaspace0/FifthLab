@@ -1,56 +1,57 @@
 package ConsoleAPP;
 
-import ConsoleAPP.commands.*;
+import ConsoleAPP.commandbuilders.*;
 import ConsoleAPP.exceptions.*;
 
 import java.util.HashMap;
 import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class Core {
-    private final HashMap<String, Command> availableCommands = new HashMap<>();
-    private final Consumer<Command> addCommandSideEffects;
-    private final Consumer<String[]> executeRequestSideEffects;
-    private final CollectionManager manager = new CollectionManager();
+    private final HashMap<String, CommandBuilder> availableCommandBuilders = new HashMap<>();
+    private final BiConsumer<String, String> addDescription;
+    private final Consumer<String[]> addHistoryLine;
 
     public Core() {
+        CollectionManager manager = new CollectionManager();
         Help help = new Help();
         History history = new History();
-        addCommandSideEffects = help::addDescription;
-        executeRequestSideEffects = history::addLine;
-        addCommand(help);
-        addCommand(new Info());
-        addCommand(new Show());
-        addCommand(new Add());
-        addCommand(new Update());
-        addCommand(new RemoveByID());
-        addCommand(new Clear());
-        addCommand(new Save());
-        addCommand(new ExecuteScript());
-        addCommand(new Exit());
-        addCommand(new AddIfMax());
-        addCommand(new AddIfMin());
-        addCommand(history);
-        addCommand(new MaxByStatus());
-        addCommand(new PrintAscending());
-        addCommand(new PrintFieldDescendingPosition());
+        addDescription = help::addDescription;
+        addHistoryLine = history::addHistoryLine;
+        addCommandBuilder(help);
+        addCommandBuilder(new Info(manager));
+        addCommandBuilder(new Show(manager));
+        addCommandBuilder(new Add(manager));
+        addCommandBuilder(new Update(manager));
+        addCommandBuilder(new RemoveByID(manager));
+        addCommandBuilder(new Clear(manager));
+        addCommandBuilder(new Save(manager));
+        addCommandBuilder(new ExecuteScript());
+        addCommandBuilder(new Exit());
+        addCommandBuilder(new AddIfMax(manager));
+        addCommandBuilder(new AddIfMin(manager));
+        addCommandBuilder(history);
+        addCommandBuilder(new MaxByStatus(manager));
+        addCommandBuilder(new PrintAscending(manager));
+        addCommandBuilder(new PrintFieldDescendingPosition(manager));
     }
 
-    public void addCommand(Command command) {
-        String description = command.getDescription();
+    public void addCommandBuilder(CommandBuilder builder) {
+        String description = builder.getDescription();
         String commandName = description.split(" ")[0];
-        availableCommands.put(commandName, command);
-        addCommandSideEffects.accept(command);
+        availableCommandBuilders.put(commandName, builder);
+        addDescription.accept(commandName, description);
     }
 
-    public RequestExecutor getRequestExecutor(String request) throws CommandNotFoundException {
-        String[] tokens = request.split(" ");
-        for (String commandName : availableCommands.keySet()) {
+    public Request buildRequest(String input) throws CommandNotFoundException {
+        String[] tokens = input.split(" ");
+        for (String commandName : availableCommandBuilders.keySet()) {
             if (commandName.equals(tokens[0])) {
-                Command command = availableCommands.get(tokens[0]);
-                command.prepareForExecution(tokens);
+                CommandBuilder builder = availableCommandBuilders.get(tokens[0]);
+                Command command = builder.build(tokens);
                 return () -> {
                     command.execute();
-                    executeRequestSideEffects.accept(tokens);
+                    addHistoryLine.accept(tokens);
                 };
             }
         }

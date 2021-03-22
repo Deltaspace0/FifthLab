@@ -1,14 +1,9 @@
-package ConsoleAPP.commands;
+package ConsoleAPP.commandbuilders;
 
-public class ExecuteScript implements Command {
+public class ExecuteScript implements CommandBuilder {
     @Override
-    public void prepareForExecution(String[] tokens) {
-
-    }
-
-    @Override
-    public void execute() {
-
+    public Command build(String[] tokens) {
+        return null;
     }
 
     @Override
