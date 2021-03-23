@@ -2,6 +2,11 @@ package ConsoleAPP.commandbuilders;
 
 import ConsoleAPP.exceptions.ExitException;
 
+/**
+ * Это Exit, который просто бросает специальное исключение.
+ * Это исключение затем обрабатывается Main'ом и программа закрывается.
+ */
+
 public class Exit implements CommandBuilder {
     @Override
     public Command build(String[] tokens) {

@@ -8,6 +8,11 @@ import java.util.HashSet;
 import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 
+/**
+ * Ядро программы. Если CollectionManager управляет коллекцией, то Core
+ * управляет командами. Можно сказать, что это самая важная часть программы.
+ */
+
 public class Core {
     private final HashMap<String, CommandBuilder> availableCommandBuilders = new HashMap<>();
     private final BiConsumer<String, String> addDescription;
@@ -16,6 +21,13 @@ public class Core {
     public Core(String filePath) {
         this(new HashSet<>(), new CollectionManager(filePath));
     }
+
+    /**
+     * Перегрузка конструктора на случай, если идёт запуск скрипта
+     * и это уже подъядро, исполняющее команды не пользователя, а скрипта.
+     * @param superCoreScripts
+     * @param manager
+     */
 
     public Core(HashSet<String> superCoreScripts, CollectionManager manager) {
         Help help = new Help();
@@ -46,6 +58,19 @@ public class Core {
         availableCommandBuilders.put(commandName, builder);
         addDescription.accept(commandName, description);
     }
+
+    /**
+     * Этот метод берёт на себя ввод пользователя и ищет команду.
+     * Если не находит - во всём винит пользователя и говорит, что такой
+     * команды нет, бросая соответствующее исключение (CommandNotFoundException).
+     * Если находит, то строит лямбду, которую затем упаковывает в Request
+     * вместе с addHistoryLine. Request позже вызывается уже в Main.
+     *
+     *
+     * @param input
+     * @return
+     * @throws InputException
+     */
 
     public Request buildRequest(String input) throws InputException {
         if (input.equals(""))

@@ -3,6 +3,11 @@ package ConsoleAPP.commandbuilders;
 import ConsoleAPP.CollectionManager;
 import ConsoleAPP.exceptions.InputException;
 
+/**
+ * Этот строитель отвечает за сохранение коллекции и
+ * вывод на экран возможных ошибок при сохранении.
+ */
+
 public class Save implements CommandBuilder {
     private final CollectionManager manager;
 

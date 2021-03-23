@@ -9,6 +9,15 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 
+/**
+ * Это менеджер коллекции. Он умеет удалять элементы.
+ * Он умеет загружать коллекцию из файла и сохранять её
+ * через FileProcessor (работу с файлами я выделил в
+ * отдельный класс, так как ExecuteScript тоже хочет читать,
+ * а там получается очень похожий код). Также менеджер тянет все
+ * InputProvider'ы, чтобы создавать новые элементы.
+ */
+
 public class CollectionManager {
     public final LinkedHashSet<Worker> elements = new LinkedHashSet<>();
     public final HashMap<Long, Worker> workersByID = new HashMap<>();
@@ -46,6 +55,12 @@ public class CollectionManager {
         }
     }
 
+    /**
+     * Используется командой Info
+     *
+     * @return
+     */
+
     public String getInfo() {
         return "Тип коллекции: LinkedHashSet" +
                 "\nДата инициализации: " + DateTimeFormatter.ofPattern("hh:mm dd.MM.yyyy").format(initializationDate) +
@@ -53,6 +68,19 @@ public class CollectionManager {
                 "\nЗагружена из файла: " + filePath +
                 "\nСледующий элемент будет иметь ID " + nextID;
     }
+
+    /**
+     * Используется командой Add
+     *
+     * Сначала все провайдеры тянулись сюда, но нужен был
+     * отдельный метод для обновления элемента, а
+     * делать дупликат кода было плохой идеей. Поэтому
+     * я перенёс всё туда, а этот метод теперь просто создаёт
+     * голый элемент с одной датой создания и ID, а затем
+     * начинает процедуру обновления элемента.
+     *
+     * @return
+     */
 
     public long initiateElementAddingProcedure() {
         while (workersByID.containsKey(nextID))
@@ -65,6 +93,17 @@ public class CollectionManager {
         initiateElementUpdatingProcedure(nextID);
         return nextID++;
     }
+
+    /**
+     * Используется командой Update
+     *
+     * InputProvider'ы в действии. Позволяют просто использовать их как значения и
+     * берут всю ответственность за взаимодействие с пользователем на себя. И
+     * это очень удобно.
+     *
+     * @param ID
+     * @return
+     */
 
     public boolean initiateElementUpdatingProcedure(long ID) {
         Worker worker = workersByID.get(ID);
@@ -97,6 +136,13 @@ public class CollectionManager {
         return true;
     }
 
+    /**
+     * Используется командой RemoveByID
+     *
+     * @param ID
+     * @return
+     */
+
     public boolean removeElement(long ID) {
         Worker worker = workersByID.get(ID);
         if (worker == null)
@@ -104,9 +150,15 @@ public class CollectionManager {
         elements.remove(worker);
         workersByID.remove(ID);
         if (ID == nextID-1)
-            nextID--;
+            nextID--; // позволяет повторно использовать освободившиеся ID
         return true;
     }
+
+    /**
+     * Используется командой Clear
+     *
+     * Происходит полный сброс всей коллекции.
+     */
 
     public void clear() {
         elements.clear();
@@ -114,10 +166,21 @@ public class CollectionManager {
         nextID = 1;
     }
 
+    /**
+     * Используется командой Save
+     *
+     * Вверху CSV таблицы пишет время создания коллекции и
+     * ID следующего нового элемента (чтобы не приходилось при
+     * каждой загрузке проходиться по всему списку элементов для
+     * нахождения свободного ID)
+     *
+     * @throws InputException
+     */
+
     public void saveToFile() throws InputException {
         StringBuilder csv = new StringBuilder();
         csv.append(DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm").format(initializationDate));
-        csv.append(",").append(nextID).append(",,,,,,,,,,,,\n");
+        csv.append(",").append(nextID).append(",,,,,,,,,,,,\n"); // Запятых ровно столько, чтобы первая строчка имела с остальными одинаковое количество столбцов
         for (Worker worker : elements)
             csv.append(worker.toString()).append("\n");
         FileProcessor.saveToFile(filePath, csv.toString().trim());

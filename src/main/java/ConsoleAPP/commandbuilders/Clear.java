@@ -2,6 +2,14 @@ package ConsoleAPP.commandbuilders;
 
 import ConsoleAPP.CollectionManager;
 
+/**
+ * Строитель команды Clear. Лямбда, возвращаемая методом build,
+ * вызывает CollectionManager'овский метод clear(), и теперь
+ * ответственность за очистку коллекции лежит на нём.
+ *
+ * @see CollectionManager
+ */
+
 public class Clear implements CommandBuilder {
     private final CollectionManager manager;
 

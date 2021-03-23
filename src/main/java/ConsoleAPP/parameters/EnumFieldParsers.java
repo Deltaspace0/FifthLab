@@ -1,5 +1,11 @@
 package ConsoleAPP.parameters;
 
+/**
+ * Набор парсеров енама, которые используются в Worker'е для загрузки полей элемента из файла.
+ *
+ * @see Worker
+ */
+
 public class EnumFieldParsers {
     private static final EnumFieldParserBuilder<Position> positionEnumFieldParserBuilder = new EnumFieldParserBuilder<>();
     private static final EnumFieldParserBuilder<Status>   statusEnumFieldParserBuilder   = new EnumFieldParserBuilder<>();

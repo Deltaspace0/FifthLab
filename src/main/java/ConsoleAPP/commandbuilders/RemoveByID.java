@@ -3,6 +3,12 @@ package ConsoleAPP.commandbuilders;
 import ConsoleAPP.CollectionManager;
 import ConsoleAPP.exceptions.*;
 
+/**
+ * Удаление элемента с определённым ID. Здесь есть проверка
+ * на то, что команда вызывается не без аргументов, что
+ * аргумент похож на ID, и что элемент с таким ID существует.
+ */
+
 public class RemoveByID implements CommandBuilder {
     private final CollectionManager manager;
 

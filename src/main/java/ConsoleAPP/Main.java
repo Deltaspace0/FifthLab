@@ -2,6 +2,10 @@ package ConsoleAPP;
 
 import ConsoleAPP.exceptions.ExitException;
 
+/**
+ * Main
+ */
+
 public class Main {
     public static void main(String[] args) {
         Core core = new Core(args[0]);

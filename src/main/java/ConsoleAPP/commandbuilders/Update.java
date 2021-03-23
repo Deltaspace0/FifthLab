@@ -3,6 +3,12 @@ package ConsoleAPP.commandbuilders;
 import ConsoleAPP.CollectionManager;
 import ConsoleAPP.exceptions.*;
 
+/**
+ * Update я сначала сделал как вызов Add и RemoveByID. Но затем пришлось
+ * изменить подход, так иначе при обновлении элемента дата его создания
+ * сбрасывалась и становилась равной текущей.
+ */
+
 public class Update implements CommandBuilder {
     private final CollectionManager manager;
 

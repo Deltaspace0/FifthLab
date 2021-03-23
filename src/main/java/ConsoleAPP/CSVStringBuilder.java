@@ -2,6 +2,10 @@ package ConsoleAPP;
 
 import java.util.ArrayList;
 
+/**
+ * Утилита для парсинга и сборки CSV.
+ */
+
 public class CSVStringBuilder {
     public String line = "";
 

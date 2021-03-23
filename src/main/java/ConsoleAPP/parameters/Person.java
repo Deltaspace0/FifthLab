@@ -2,6 +2,10 @@ package ConsoleAPP.parameters;
 
 import java.time.LocalDateTime;
 
+/**
+ * Персональные данные - дата рождения, цвет волос, место работы.
+ */
+
 public class Person {
     private LocalDateTime birthday; //Поле не может быть null
     private Color hairColor; //Поле не может быть null

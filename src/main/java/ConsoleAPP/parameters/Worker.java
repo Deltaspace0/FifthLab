@@ -8,6 +8,18 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
+/**
+ * Элемент коллекции - Worker. Способен распарсить
+ * строку из CSV таблицы, чтоб инициализировать свои поля.
+ * А ещё способен упаковать себя в CSV строку.
+ * Реализует Comparable для сортировки по умолчанию - в данном
+ * случае сравниваются зарплаты у работников.
+ * Есть метод generateInfoString(), который вызывается каждый
+ * раз при обновлении полей. Сгенерированная таким образом строка
+ * infoString используется командой Show, чтобы вывести
+ * на экран поля элементов.
+ */
+
 public class Worker implements Comparable<Worker> {
     private long ID; //Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -19,6 +31,10 @@ public class Worker implements Comparable<Worker> {
     private Person person; //Поле может быть null
 
     private String infoString;
+
+    /**
+     * Перегрузка конструктора на случай, если коллекция создаётся с нуля, или загружается из файла.
+     */
 
     public Worker() {
 

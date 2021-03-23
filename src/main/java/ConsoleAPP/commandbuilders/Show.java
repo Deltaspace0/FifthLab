@@ -4,6 +4,15 @@ import ConsoleAPP.CollectionManager;
 import ConsoleAPP.exceptions.*;
 import ConsoleAPP.parameters.Worker;
 
+/**
+ * Show если вызывается без аргументов, выводит все элементы подряд,
+ * а если дать ему ID, то выведет только элемент с таким ID. (как help)
+ * Чтобы вывести информацию об элементе, он сначала берёт у элемента
+ * подготовленную отформатированную строку, а потом выводит её на экран.
+ *
+ * @see Worker
+ */
+
 public class Show implements CommandBuilder {
     private final CollectionManager manager;
 

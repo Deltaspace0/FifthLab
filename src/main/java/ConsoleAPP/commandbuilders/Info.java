@@ -2,6 +2,14 @@ package ConsoleAPP.commandbuilders;
 
 import ConsoleAPP.CollectionManager;
 
+/**
+ * Самый маленький строитель команд после Clear.
+ * Единственное, что делает - заворачивает в лямбду отображение на экран
+ * того, что вернёт CollectionManager.
+ *
+ * @see CollectionManager
+ */
+
 public class Info implements CommandBuilder {
     private final CollectionManager manager;
 

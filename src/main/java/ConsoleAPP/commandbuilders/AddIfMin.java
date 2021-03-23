@@ -3,6 +3,14 @@ package ConsoleAPP.commandbuilders;
 import ConsoleAPP.CollectionManager;
 import ConsoleAPP.parameters.Worker;
 
+/**
+ * Это строитель команды AddIfMin.
+ * Здесь почти то же самое, что и у AddIfMax,
+ * только одно слово да знак неравенства изменены.
+ *
+ * @see AddIfMax
+ */
+
 public class AddIfMin implements CommandBuilder {
     private final CollectionManager manager;
 

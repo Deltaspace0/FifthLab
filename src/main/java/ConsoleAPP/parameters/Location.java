@@ -1,5 +1,10 @@
 package ConsoleAPP.parameters;
 
+/**
+ * Место работы. Здесь есть поля для названия места работы,
+ * а также его положений во всех трёх измерениях.
+ */
+
 public class Location {
     private Long x; //Поле не может быть null
     private Integer y; //Поле не может быть null

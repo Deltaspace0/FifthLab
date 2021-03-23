@@ -2,6 +2,16 @@ package ConsoleAPP.commandbuilders;
 
 import java.util.LinkedList;
 
+/**
+ * History отвечает за историю вызовов команд.
+ * Каждый строитель команд возвращает лямбду, а Core потом
+ * запаковывает каждую такую лямбду в Request вместе с методом
+ * addHistoryLine, так что этот метод вызывается каждый раз, когда
+ * вызывается какая-либо команда (лямбда). History сразу же отсекает
+ * слишком старые вызовы, чтобы всего вызовов в LinkedList было не
+ * больше девяти.
+ */
+
 public class History implements CommandBuilder {
     private final LinkedList<String> commandHistory = new LinkedList<>();
 

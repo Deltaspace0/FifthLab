@@ -5,6 +5,15 @@ import ConsoleAPP.parameters.Worker;
 
 import java.util.Iterator;
 
+/**
+ * В этом строителе команд используется итератор, чтобы
+ * было удобнее отслеживать, есть ли вообще элементы в
+ * коллекции, чтобы вывести максимальный по статусу.
+ * Так как указание статуса опционально при создании
+ * элемента, и поле может быть null, в цикле идёт
+ * проверка на это.
+ */
+
 public class MaxByStatus implements CommandBuilder {
     private final CollectionManager manager;
 
@@ -24,7 +33,7 @@ public class MaxByStatus implements CommandBuilder {
             maxStatusWorker = iterator.next();
             while (iterator.hasNext()) {
                 Worker worker = iterator.next();
-                if (maxStatusWorker.getStatus() == null || maxStatusWorker.getStatus().compareTo(worker.getStatus()) > 0)
+                if (maxStatusWorker.getStatus() != null && maxStatusWorker.getStatus().compareTo(worker.getStatus()) < 0)
                     maxStatusWorker = worker;
             }
             System.out.println(maxStatusWorker.getInfoString());
