@@ -11,7 +11,10 @@ public class Clear implements CommandBuilder {
 
     @Override
     public Command build(String[] tokens) {
-        return null;
+        return () -> {
+            manager.clear();
+            System.out.println("Очистил коллекцию, теперь там пусто.");
+        };
     }
 
     @Override

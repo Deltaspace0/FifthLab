@@ -11,7 +11,7 @@ public class Info implements CommandBuilder {
 
     @Override
     public Command build(String[] tokens) {
-        return null;
+        return () -> System.out.println(manager.getInfo());
     }
 
     @Override

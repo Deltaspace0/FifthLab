@@ -7,9 +7,9 @@ import java.util.Scanner;
 public class InputProvider<T> {
     private final String invitation;
     private final InputGetter<T> inputGetter;
-    private final Scanner scanner = new Scanner(System.in);
+    private Scanner scanner = new Scanner(System.in);
 
-    interface InputGetter<T> {
+    public interface InputGetter<T> {
         T get(String input) throws InputException;
     }
 
@@ -21,7 +21,12 @@ public class InputProvider<T> {
     public T provide() {
         while (true) {
             System.out.print(invitation);
-            String input = scanner.nextLine().trim();
+            if (!scanner.hasNextLine()) {
+                System.out.println("А зачем нажимать Ctrl+D?");
+                scanner = new Scanner(System.in);
+                continue;
+            }
+            String input = scanner.nextLine().trim().replaceAll("( )+", " ");
             T result;
             try {
                 result = inputGetter.get(input);

@@ -4,6 +4,7 @@ import ConsoleAPP.commandbuilders.*;
 import ConsoleAPP.exceptions.*;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.function.Consumer;
 import java.util.function.BiConsumer;
 
@@ -12,8 +13,11 @@ public class Core {
     private final BiConsumer<String, String> addDescription;
     private final Consumer<String[]> addHistoryLine;
 
-    public Core() {
-        CollectionManager manager = new CollectionManager();
+    public Core(String filePath) {
+        this(new HashSet<>(), new CollectionManager(filePath));
+    }
+
+    public Core(HashSet<String> superCoreScripts, CollectionManager manager) {
         Help help = new Help();
         History history = new History();
         addDescription = help::addDescription;
@@ -26,7 +30,7 @@ public class Core {
         addCommandBuilder(new RemoveByID(manager));
         addCommandBuilder(new Clear(manager));
         addCommandBuilder(new Save(manager));
-        addCommandBuilder(new ExecuteScript());
+        addCommandBuilder(new ExecuteScript(superCoreScripts, manager));
         addCommandBuilder(new Exit());
         addCommandBuilder(new AddIfMax(manager));
         addCommandBuilder(new AddIfMin(manager));
@@ -43,7 +47,9 @@ public class Core {
         addDescription.accept(commandName, description);
     }
 
-    public Request buildRequest(String input) throws CommandNotFoundException {
+    public Request buildRequest(String input) throws InputException {
+        if (input.equals(""))
+            return () -> {};
         String[] tokens = input.split(" ");
         for (String commandName : availableCommandBuilders.keySet()) {
             if (commandName.equals(tokens[0])) {

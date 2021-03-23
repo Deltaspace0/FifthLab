@@ -1,6 +1,9 @@
 package ConsoleAPP.commandbuilders;
 
 import ConsoleAPP.CollectionManager;
+import ConsoleAPP.parameters.Worker;
+
+import java.util.TreeSet;
 
 public class PrintAscending implements CommandBuilder {
     private final CollectionManager manager;
@@ -11,7 +14,11 @@ public class PrintAscending implements CommandBuilder {
 
     @Override
     public Command build(String[] tokens) {
-        return null;
+        return () -> {
+            TreeSet<Worker> treeSet = new TreeSet<>(manager.elements);
+            for (Worker worker : treeSet)
+                System.out.println(worker.getInfoString());
+        };
     }
 
     @Override

@@ -1,6 +1,7 @@
 package ConsoleAPP.commandbuilders;
 
 import ConsoleAPP.CollectionManager;
+import ConsoleAPP.exceptions.InputException;
 
 public class Save implements CommandBuilder {
     private final CollectionManager manager;
@@ -11,7 +12,14 @@ public class Save implements CommandBuilder {
 
     @Override
     public Command build(String[] tokens) {
-        return null;
+        return () -> {
+            try {
+                manager.saveToFile();
+                System.out.println("Коллекция сохранена в файл.");
+            } catch (InputException exception) {
+                System.out.println(exception.getMessage());
+            }
+        };
     }
 
     @Override

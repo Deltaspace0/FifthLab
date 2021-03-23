@@ -1,6 +1,9 @@
 package ConsoleAPP.commandbuilders;
 
 import ConsoleAPP.CollectionManager;
+import ConsoleAPP.parameters.Worker;
+
+import java.util.Iterator;
 
 public class MaxByStatus implements CommandBuilder {
     private final CollectionManager manager;
@@ -11,7 +14,21 @@ public class MaxByStatus implements CommandBuilder {
 
     @Override
     public Command build(String[] tokens) {
-        return null;
+        return () -> {
+            Worker maxStatusWorker;
+            Iterator<Worker> iterator = manager.elements.iterator();
+            if (!iterator.hasNext()) {
+                System.out.println("Нет никаких элементов в коллекции.");
+                return;
+            }
+            maxStatusWorker = iterator.next();
+            while (iterator.hasNext()) {
+                Worker worker = iterator.next();
+                if (maxStatusWorker.getStatus() == null || maxStatusWorker.getStatus().compareTo(worker.getStatus()) > 0)
+                    maxStatusWorker = worker;
+            }
+            System.out.println(maxStatusWorker.getInfoString());
+        };
     }
 
     @Override

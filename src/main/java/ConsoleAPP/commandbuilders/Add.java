@@ -11,7 +11,10 @@ public class Add implements CommandBuilder {
 
     @Override
     public Command build(String[] tokens) {
-        return null;
+        return () -> {
+            long ID = manager.initiateElementAddingProcedure();
+            System.out.printf("Элемент успешно добавлен в коллекцию (ID: %d).%n", ID);
+        };
     }
 
     @Override
