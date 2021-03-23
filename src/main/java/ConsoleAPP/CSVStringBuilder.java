@@ -38,6 +38,7 @@ public class CSVStringBuilder {
                 parsingField = false;
                 fields.add(field.toString());
                 field.setLength(0);
+                quoteDuringParsing = false;
                 continue;
             }
             if (parsingField) {
