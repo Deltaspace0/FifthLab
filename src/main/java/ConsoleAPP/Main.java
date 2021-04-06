@@ -8,7 +8,7 @@ import ConsoleAPP.exceptions.ExitException;
 
 public class Main {
     public static void main(String[] args) {
-        Core core = new Core(args[0]);
+        Core core = new Core(System.getenv("THETABLE"));
         InputProvider<Request> inputProvider = new InputProvider<>("Введите команду: ", core::buildRequest);
         while (true) {
             Request request = inputProvider.provide();

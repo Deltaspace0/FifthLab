@@ -42,7 +42,7 @@ public class CollectionManager {
             System.out.println("Внимание! Файла не было, поэтому вот новая коллекция.");
             createNew = true;
         } catch (InputException exception) {
-            System.out.println(exception.getMessage()+"\nВот новая коллекция, но её сохранить вряд ли удастся.");
+            System.out.println(exception.getMessage());
             createNew = true;
         } catch (RuntimeException exception) {
             exception.printStackTrace();

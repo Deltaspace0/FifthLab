@@ -24,6 +24,8 @@ public class FileProcessor {
             throw new FileDoesNotExistException(filePath);
         if (file.isDirectory())
             throw new NotFileButDirectoryException(filePath);
+        if (!file.canRead() && !file.canWrite())
+            throw new FileCannotBeReadAndWrittenException(filePath);
         if (!file.canRead())
             throw new FileCannotBeReadException(filePath);
         try {
