@@ -34,7 +34,13 @@ public class CollectionManager {
             initializationDate = LocalDateTime.parse(meta[0], DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm"));
             nextID = Long.parseLong(meta[1]);
             for (int i = 1; i < lines.length; i++) {
-                Worker worker = new Worker(lines[i]);
+                Worker worker;
+                try {
+                    worker = new Worker(lines[i]);
+                } catch (InputException exception) {
+                    System.out.println("При загрузке работника возникла ошибка: " + exception.getMessage());
+                    continue;
+                }
                 elements.add(worker);
                 workersByID.put(worker.getID(), worker);
             }

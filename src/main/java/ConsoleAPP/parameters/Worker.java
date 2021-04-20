@@ -1,6 +1,7 @@
 package ConsoleAPP.parameters;
 
 import ConsoleAPP.CSVStringBuilder;
+import ConsoleAPP.exceptions.InputException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -40,28 +41,29 @@ public class Worker implements Comparable<Worker> {
 
     }
 
-    public Worker(String line) {
+    public Worker(String line) throws InputException {
         ArrayList<String> tokens = CSVStringBuilder.parse(line);
         ID = Long.parseLong(tokens.get(0));
         name = tokens.get(1);
         coordinates = new Coordinates();
-        coordinates.setX(Integer.parseInt(tokens.get(2)));
-        coordinates.setY(Double.parseDouble(tokens.get(3)));
-        creationDate = ZonedDateTime.of(LocalDateTime.parse(tokens.get(4), DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm")), ZoneId.systemDefault());
-        salary = Integer.parseInt(tokens.get(5));
-        position = EnumFieldParsers.parsePosition(tokens.get(6));
-        status = EnumFieldParsers.parseStatus(tokens.get(7));
-        if (!tokens.get(8).equals("null")) {
+        coordinates.setX(FieldValidators.coordinatesXValidator.get(tokens.get(2)));
+        coordinates.setY(FieldValidators.coordinatesYValidator.get(tokens.get(3)));
+        creationDate = ZonedDateTime.of(LocalDateTime.parse(tokens.get(4),
+                DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm")), ZoneId.systemDefault());
+        salary = FieldValidators.salaryValidator.get(tokens.get(5));
+        position = FieldValidators.positionValidator.get(tokens.get(6));
+        if (!tokens.get(7).equals(""))
+            status = FieldValidators.statusValidator.get(tokens.get(7));
+        if (!tokens.get(8).equals("")) {
             person = new Person();
-            person.setBirthday(LocalDateTime.parse(tokens.get(8), DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm")));
-            person.setHairColor(EnumFieldParsers.parseColor(tokens.get(9)));
-            if (!tokens.get(10).equals("null")) {
+            person.setBirthday(FieldValidators.birthdayValidator.get(tokens.get(8)));
+            person.setHairColor(FieldValidators.colorValidator.get(tokens.get(9)));
+            if (!tokens.get(10).equals("")) {
                 Location location = new Location();
                 location.setName(tokens.get(10));
-                location.setX(Long.valueOf(tokens.get(11)));
-                location.setY(Integer.valueOf(tokens.get(12)));
-                location.setZ(Integer.valueOf(tokens.get(13)));
-                person.setLocation(location);
+                location.setX(FieldValidators.locationXValidator.get(tokens.get(11)));
+                location.setY(FieldValidators.locationYValidator.get(tokens.get(12)));
+                location.setZ(FieldValidators.locationZValidator.get(tokens.get(13)));
             }
         }
         generateInfoString();
@@ -80,16 +82,16 @@ public class Worker implements Comparable<Worker> {
         csvStringBuilder.append(DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm").format(creationDate));
         csvStringBuilder.append(String.valueOf(salary));
         csvStringBuilder.append(position.name());
-        csvStringBuilder.append(status == null ? "null" : status.name());
+        csvStringBuilder.append(status == null ? "" : status.name());
         if (person == null) {
             for (int i = 0; i < 6; i++)
-                csvStringBuilder.append("null");
+                csvStringBuilder.append("");
         } else {
-            csvStringBuilder.append(DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm").format(person.getBirthday()));
+            csvStringBuilder.append(DateTimeFormatter.ofPattern("dd.MM.yyyy").format(person.getBirthday()));
             csvStringBuilder.append(person.getHairColor().name());
             if (person.getLocation() == null) {
                 for (int i = 0; i < 4; i++)
-                    csvStringBuilder.append("null");
+                    csvStringBuilder.append("");
             } else {
                 csvStringBuilder.append(person.getLocation().getName());
                 csvStringBuilder.append(String.valueOf(person.getLocation().getX()));
