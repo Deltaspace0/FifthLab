@@ -1,7 +1,8 @@
 package ConsoleAPP.exceptions;
 
 /**
- * Уникальное исключение, которое бросает только ExecuteScript.
+ * Исключение, которое бросает ExecuteScript при попытке
+ * исполнить скрипт, делающий рекурсивный вызов.
  */
 
 public class RecursiveScriptExecutionException extends InputException {

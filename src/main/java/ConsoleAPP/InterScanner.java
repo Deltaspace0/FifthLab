@@ -3,6 +3,12 @@ package ConsoleAPP;
 import java.util.ArrayDeque;
 import java.util.Scanner;
 
+/**
+ * Это обёртка для сканнера, которая позволяет в обход
+ * пользовательского ввода поставить в очередь на обработку
+ * другие какие-нибудь строки, чем пользуется, например, ExecuteScript.
+ */
+
 public class InterScanner {
     private static Scanner scanner = new Scanner(System.in);
     private static ArrayDeque<String> interlines = new ArrayDeque<>();

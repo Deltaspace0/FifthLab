@@ -4,8 +4,7 @@ import ConsoleAPP.CollectionManager;
 
 /**
  * Строитель команды Clear. Лямбда, возвращаемая методом build,
- * вызывает CollectionManager'овский метод clear(), и теперь
- * ответственность за очистку коллекции лежит на нём.
+ * вызывает CollectionManager'овский метод clear().
  *
  * @see CollectionManager
  */

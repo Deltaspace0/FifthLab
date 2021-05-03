@@ -2,7 +2,7 @@ package ConsoleAPP.exceptions;
 
 /**
  * Исключение, которое бросается, когда пытаются прочитать
- * файл, а это оказывается директория.
+ * файл, а это оказывается вовсе не файл, а директория.
  */
 
 public class NotFileButDirectoryException extends InvalidFieldException {

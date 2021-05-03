@@ -3,7 +3,9 @@ package ConsoleAPP.commandbuilders;
 import ConsoleAPP.exceptions.ExitException;
 
 /**
- * Это Exit, который просто бросает специальное исключение.
+ * Это строитель команды Exit. Команда при исполнении
+ * бросает исключение ExitException.
+ * <p>
  * Это исключение затем обрабатывается Main'ом и программа закрывается.
  */
 

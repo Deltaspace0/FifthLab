@@ -5,6 +5,16 @@ import ConsoleAPP.exceptions.*;
 
 import java.util.HashSet;
 
+/**
+ * Это строитель команды ExecuteScript. Сначала загружает
+ * содержимое скрипта до исполнения команды, а затем при
+ * исполнении команды исполняет, всё что записано внутри скрипта.
+ * <p>
+ * При этом учитывается ограничение на циклический вызов скриптов
+ * (то есть оно не позволяет какому-либо из скриптов сделать
+ * рекурсивный вызов напрямую или через другие скрипты).
+ */
+
 public class ExecuteScript implements CommandBuilder {
     private final CollectionManager manager;
     private final HashSet<String> superCoreScripts;

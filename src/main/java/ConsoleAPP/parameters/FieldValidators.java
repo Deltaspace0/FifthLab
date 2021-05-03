@@ -8,6 +8,10 @@ import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Это класс-набор валидаторов полей при создании новых элементов.
+ */
+
 public class FieldValidators {
     private static final Pattern birthdayPattern = Pattern.compile("^\\d{2}\\.\\d{2}\\.\\d{4}$");
 

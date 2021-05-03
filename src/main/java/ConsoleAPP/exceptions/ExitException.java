@@ -1,7 +1,7 @@
 package ConsoleAPP.exceptions;
 
 /**
- * Для выхода из программы.
+ * Исключение, которое бросается командой Exit.
  */
 
 public class ExitException extends Exception {

@@ -3,9 +3,8 @@ package ConsoleAPP.commandbuilders;
 import ConsoleAPP.CollectionManager;
 
 /**
- * Самый маленький строитель команд после Clear.
- * Единственное, что делает - заворачивает в лямбду отображение на экран
- * того, что вернёт CollectionManager.
+ * Это строитель команды Info. Заворачивает в лямбду
+ * отображение на экран того, что возвращает CollectionManager.
  *
  * @see CollectionManager
  */
